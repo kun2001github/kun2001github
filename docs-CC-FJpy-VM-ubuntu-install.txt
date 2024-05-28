@@ -1,0 +1,39 @@
+前置条件：
+安装vscode 1.85.0版本
+安装vmware
+安装ubuntu18.04
+安装anconda 在ubuntu18.04
+
+
+其中：vscode安装插件有 ssh python jupyter makefile
+
+在ubuntu18.04操作
+安装工具包gcc git ssh等
+sudo apt update
+sudo apt install open-vm-tools-desktop openssh-server git build-essential
+
+
+
+安装anconda以及激活环境和python依赖库
+wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh
+conda create -n CC-PJpy38 python=3.8
+conda activate CC-PJpy38
+pip install matplotlib h5py pandas geopy obspy Cython -i https://pypi.tuna.tsinghua.edu.cn/simple some-package
+#################忽视#####################
+Cython 这个库是make cpu的时候要用到的
+pip install matplotlib -i https://pypi.tuna.tsinghua.edu.cn/simple some-package
+ pip install h5py -i https://pypi.tuna.tsinghua.edu.cn/simple some-package
+pip install pandas -i https://pypi.tuna.tsinghua.edu.cn/simple some-package
+pip install geopy -i https://pypi.tuna.tsinghua.edu.cn/simple some-package
+pip install obspy -i https://pypi.tuna.tsinghua.edu.cn/simple some-package
+#################忽视###########################
+
+克隆项目，以及编译安装fftw以及安装CC-FJpy
+#https://link.csdn.net/?target=github.com/ColinLii/CC-FJpy
+#git clone https://gitcode.com/ColinLii/CC-FJpy.git
+git clone https://github.com/ColinLii/CC-FJpy.git
+cd CC-FJpy
+make fftw
+make cpu
+make install

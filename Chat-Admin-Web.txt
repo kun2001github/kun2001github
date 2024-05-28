@@ -1,0 +1,23 @@
+FROM node:18.10.0
+
+# 安装 pnpm
+RUN npm install -g pnpm
+
+# 设置工作目录
+WORKDIR /app
+
+# 复制 package.json 和 pnpm-lock.yaml 文件
+COPY package.json pnpm-lock.yaml ./
+
+# 安装依赖
+RUN pnpm install
+
+# 拷贝项目文件到工作目录
+COPY . .
+
+# 把 3000 端口暴露给外部容器
+EXPOSE 3000
+
+# 容器启动时首先初始化数据库，随后运行应用
+# 注意：db:init 可能依赖于数据库服务的可用性，因此在某些情况下你可能需要等待数据库服务启动完毕
+CMD ["sh", "-c", "pnpm run db:init && pnpm start"]

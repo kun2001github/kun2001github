@@ -1,0 +1,135 @@
+git clone https://github.com/barisgecer/OSTeC --recursive
+cd OSTeC
+vim environment.yml #把里面的pip以下的都删除掉
+conda env create -f environment.yml -n ostec
+source activate ostec
+——————————————————————
+此实现仅在安装了Nvidia GPU和CUDA 10.0和CuDNN-7.0的Ubuntu环境下进行测试。
+pip的都通过手动安装即可
+vim environment.txt
+absl-py==0.14.1
+astor==0.8.1
+cached-property==1.5.2
+charset-normalizer==2.0.7
+cmake==3.21.3
+dataclasses==0.8
+dlib==19.22.1
+dominate==2.6.0
+future==0.18.2
+gast==0.5.2
+google-pasta==0.2.0
+grpcio==1.41.0
+idna==3.3
+imutils==0.5.4
+keras==2.3.0
+keras-applications==1.0.8
+keras-preprocessing==1.0.5
+kornia==0.5.5
+markdown==3.3.4
+matplotlib==3.1.3
+mayavi==4.7.2
+numpy==1.16.1
+protobuf==3.18.1
+pyyaml==6.0
+requests==2.26.0
+tensorboard==1.14.0
+tensorflow-estimator==1.14.0
+tensorflow-gpu==1.14.0
+termcolor==1.1.0
+tqdm==4.62.3
+trimesh==3.9.20
+urllib3==1.26.7
+werkzeug==2.0.2
+wrapt==1.13.2
+保存退出
+pip install -r environment.txt -i https://pypi.tuna.tsinghua.edu.cn/simple some-package
+——————————————————————
+nvcc -V #根据自己的cuda安装torch1.6.0的版本 
+pip install torch==1.6.0+cu101 torchvision==0.7.0+cu101 -f https://download.pytorch.org/whl/torch_stable.html
+——————————————————————————
+
+############测试torch是否能使用cuda####True表示能使用
+(ostec) root@autodl-container-e61c4d9365-fc0755ea:~/OSTeC-main# python
+Python 3.6.13 |Anaconda, Inc.| (default, Jun  4 2021, 14:25:59) 
+[GCC 7.5.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import torch
+>>> torch.cuda.is_available()
+True
+
+——————————————————————
+安装Deep3DFaceRecon_pytorch
+rm -rf external/deep3dfacerecon/
+cd external
+git clone https://github.com/barisgecer/Deep3DFaceRecon_pytorch.git
+cd deep3dfacerecon/nvdiffrast
+pip install .
+
+
+https://faces.dmi.unibas.ch/bfm/main.php?nav=1-2&id=downloads #通过这个网站获取巴塞尔Face Model 2009（BFM 09）条件模型，输入邮箱，提交，会发给您到邮箱里面，并且附带账号密码，然后上传到然后上传到OSTeC/external/deep3dfacerecon/BFM目录里
+
+
+访问：https://drive.google.com/file/d/1bw5Xf8C12pWmcMhNEu6PtsYVZkVucEN6/view?usp=sharing  下载表达基础（Exp_Pca.bin）然后上传到OSTeC/external/deep3dfacerecon/BFM目录里
+
+
+目录结构
+OSTeC
+│
+└─── external
+     │
+     └─── deep3dfacerecon
+          │
+          └─── BFM
+              │
+              └─── 01_MorphableModel.mat
+              │
+              └─── Exp_Pca.bin
+              |
+              └─── ...
+
+
+
+访问：https://drive.google.com/drive/folders/1liaIxn9smpudjjqMaWWRpP0mXRW_qRPP?usp=sharing 下载预训练模型，并上传到OSTeC/external/deep3dfacerecon/checkpoints/face_recon
+
+目录结构
+OSTeC
+│
+└─── external
+     │
+     └─── deep3dfacerecon
+          │
+          └─── checkpoints
+               │
+               └─── face_recon
+                   │
+                   └─── epoch_latest.pth
+
+访问： https://drive.google.com/file/d/1TBoNt55vleRkMZaT9XKt6oNQmo8hkN-Q/view?usp=sharing 下载人脸识别&地标检测& VGG &样式编码器模型，并上传到服务器OSTeC/models/ 里面
+
+目录结构
+OSTeC
+│
+└─── models
+     │
+     └─── resnet_18_20191231.h5
+     │
+     └─── vgg16_zhang_perceptual.pkl
+     │
+     └─── alignment
+     │         .
+     │         .
+     │
+     └─── fr_models
+               .
+               .
+
+访问：https://drive.google.com/file/d/1eUe18HoH05p0yFUd_sN6GXdTj82aW0m9/view?usp=sharing 下载人脸分割模型，上传到OSTeC/models/Graphonomy
+
+OSTeC
+│
+└─── models
+     │
+     └─── Graphonomy
+         │
+         └─── inference.pth
+

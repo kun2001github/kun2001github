@@ -1,0 +1,32 @@
+cuda 11.3
+
+
+conda create -n AnchorUDF python=3.7
+conda install pytorch==1.10.1 torchvision==0.11.2 torchaudio==0.10.1 cudatoolkit=11.3 -c pytorch -c conda-forge
+
+测试
+import torch
+torch.cuda.is_available()
+
+
+
+git clone https://github.com/zhaofang0627/AnchorUDF.git
+
+
+conda install tqdm=4.55
+
+pip Instal trimesh==3.9.1
+
+
+
+conda install opencv -c conda-forge
+ImportError: libGL.so.1: cannot open shared object file: No such file or directory
+解决：pip3 install opencv-python-headless
+
+conda install scipy
+
+
+
+
+git clone https://github.com/ThibaultGROUEIX/ChamferDistancePytorch.git
+
